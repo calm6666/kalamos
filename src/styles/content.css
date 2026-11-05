@@ -1,0 +1,473 @@
+/**
+ * 正文内容样式：.kala-content 作用域（静态渲染与编辑态共用）
+ * 编辑态容器为 .kala-editor（内含 ProseMirror），
+ * 静态渲染容器为 .kala-content，两者排版规则保持一致
+ */
+
+/* ===== 调色板工具类（字色 / 背景色 / 高亮 / 字级）
+ * 说明：kala- 前缀类名为本库独占命名空间，工具类直接全局定义，
+ * 静态渲染与编辑态同时生效，且不存在作用域特异性覆盖问题
+ */
+.kala-color-blue-01 {
+  color: var(--kala-color-blue-01);
+}
+.kala-color-blue-02 {
+  color: var(--kala-color-blue-02);
+}
+.kala-color-blue-03 {
+  color: var(--kala-color-blue-03);
+}
+.kala-color-blue-04 {
+  color: var(--kala-color-blue-04);
+}
+.kala-color-cyan-01 {
+  color: var(--kala-color-cyan-01);
+}
+.kala-color-cyan-02 {
+  color: var(--kala-color-cyan-02);
+}
+.kala-color-cyan-03 {
+  color: var(--kala-color-cyan-03);
+}
+.kala-color-cyan-04 {
+  color: var(--kala-color-cyan-04);
+}
+.kala-color-green-01 {
+  color: var(--kala-color-green-01);
+}
+.kala-color-green-02 {
+  color: var(--kala-color-green-02);
+}
+.kala-color-green-03 {
+  color: var(--kala-color-green-03);
+}
+.kala-color-green-04 {
+  color: var(--kala-color-green-04);
+}
+.kala-color-yellow-01 {
+  color: var(--kala-color-yellow-01);
+}
+.kala-color-yellow-02 {
+  color: var(--kala-color-yellow-02);
+}
+.kala-color-yellow-03 {
+  color: var(--kala-color-yellow-03);
+}
+.kala-color-yellow-04 {
+  color: var(--kala-color-yellow-04);
+}
+.kala-color-red-01 {
+  color: var(--kala-color-red-01);
+}
+.kala-color-red-02 {
+  color: var(--kala-color-red-02);
+}
+.kala-color-red-03 {
+  color: var(--kala-color-red-03);
+}
+.kala-color-red-04 {
+  color: var(--kala-color-red-04);
+}
+.kala-color-purple-01 {
+  color: var(--kala-color-purple-01);
+}
+.kala-color-purple-02 {
+  color: var(--kala-color-purple-02);
+}
+.kala-color-purple-03 {
+  color: var(--kala-color-purple-03);
+}
+.kala-color-purple-04 {
+  color: var(--kala-color-purple-04);
+}
+.kala-color-gray-01 {
+  color: var(--kala-color-gray-01);
+}
+.kala-color-gray-02 {
+  color: var(--kala-color-gray-02);
+}
+.kala-color-gray-03 {
+  color: var(--kala-color-gray-03);
+}
+
+.kala-bg-blue-01 {
+  background-color: var(--kala-bg-blue-01);
+}
+.kala-bg-blue-02 {
+  background-color: var(--kala-bg-blue-02);
+}
+.kala-bg-blue-03 {
+  background-color: var(--kala-bg-blue-03);
+}
+.kala-bg-blue-04 {
+  background-color: var(--kala-bg-blue-04);
+}
+.kala-bg-cyan-01 {
+  background-color: var(--kala-bg-cyan-01);
+}
+.kala-bg-cyan-02 {
+  background-color: var(--kala-bg-cyan-02);
+}
+.kala-bg-cyan-03 {
+  background-color: var(--kala-bg-cyan-03);
+}
+.kala-bg-cyan-04 {
+  background-color: var(--kala-bg-cyan-04);
+}
+.kala-bg-green-01 {
+  background-color: var(--kala-bg-green-01);
+}
+.kala-bg-green-02 {
+  background-color: var(--kala-bg-green-02);
+}
+.kala-bg-green-03 {
+  background-color: var(--kala-bg-green-03);
+}
+.kala-bg-green-04 {
+  background-color: var(--kala-bg-green-04);
+}
+.kala-bg-yellow-01 {
+  background-color: var(--kala-bg-yellow-01);
+}
+.kala-bg-yellow-02 {
+  background-color: var(--kala-bg-yellow-02);
+}
+.kala-bg-yellow-03 {
+  background-color: var(--kala-bg-yellow-03);
+}
+.kala-bg-yellow-04 {
+  background-color: var(--kala-bg-yellow-04);
+}
+.kala-bg-red-01 {
+  background-color: var(--kala-bg-red-01);
+}
+.kala-bg-red-02 {
+  background-color: var(--kala-bg-red-02);
+}
+.kala-bg-red-03 {
+  background-color: var(--kala-bg-red-03);
+}
+.kala-bg-red-04 {
+  background-color: var(--kala-bg-red-04);
+}
+.kala-bg-purple-01 {
+  background-color: var(--kala-bg-purple-01);
+}
+.kala-bg-purple-02 {
+  background-color: var(--kala-bg-purple-02);
+}
+.kala-bg-purple-03 {
+  background-color: var(--kala-bg-purple-03);
+}
+.kala-bg-purple-04 {
+  background-color: var(--kala-bg-purple-04);
+}
+.kala-bg-gray-01 {
+  background-color: var(--kala-bg-gray-01);
+}
+.kala-bg-gray-02 {
+  background-color: var(--kala-bg-gray-02);
+}
+.kala-bg-gray-03 {
+  background-color: var(--kala-bg-gray-03);
+}
+
+mark[class*="kala-mark-"] {
+  padding: 0 2px;
+  border-radius: 2px;
+  background-color: var(--kala-bg-yellow-02);
+}
+.kala-mark-blue-02 {
+  background-color: var(--kala-bg-blue-02);
+}
+.kala-mark-cyan-02 {
+  background-color: var(--kala-bg-cyan-02);
+}
+.kala-mark-green-02 {
+  background-color: var(--kala-bg-green-02);
+}
+.kala-mark-yellow-02 {
+  background-color: var(--kala-bg-yellow-02);
+}
+.kala-mark-red-02 {
+  background-color: var(--kala-bg-red-02);
+}
+.kala-mark-purple-02 {
+  background-color: var(--kala-bg-purple-02);
+}
+
+.kala-font-small {
+  font-size: var(--kala-font-size-small);
+}
+
+/* ===== 站内链接 ===== */
+.kala-link {
+  color: var(--kala-primary);
+  text-decoration: none;
+}
+.kala-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== 缩进（kala-indent-1..8，阶梯 32px） ===== */
+.kala-indent-1 {
+  padding-left: 32px;
+}
+.kala-indent-2 {
+  padding-left: 64px;
+}
+.kala-indent-3 {
+  padding-left: 96px;
+}
+.kala-indent-4 {
+  padding-left: 128px;
+}
+.kala-indent-5 {
+  padding-left: 160px;
+}
+.kala-indent-6 {
+  padding-left: 192px;
+}
+.kala-indent-7 {
+  padding-left: 224px;
+}
+.kala-indent-8 {
+  padding-left: 256px;
+}
+
+/* ===== 对齐 ===== */
+.kala-align-center {
+  text-align: center;
+}
+.kala-align-right {
+  text-align: right;
+}
+
+/* ===== 正文排版（.kala-content 作用域） ===== */
+.kala-content {
+  color: var(--kala-text-color);
+  font-size: var(--kala-font-size-base);
+  line-height: var(--kala-line-height);
+  word-break: break-word;
+}
+
+.kala-content h1,
+.kala-content h2,
+.kala-content h3 {
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 24px 0 12px;
+}
+.kala-content h1 {
+  font-size: var(--kala-font-size-h1);
+}
+.kala-content h2 {
+  font-size: var(--kala-font-size-h2);
+}
+.kala-content h3 {
+  font-size: var(--kala-font-size-h3);
+}
+
+.kala-content p {
+  margin: 8px 0;
+}
+.kala-content ul,
+.kala-content ol {
+  padding-left: 24px;
+  margin: 8px 0;
+}
+.kala-content blockquote {
+  margin: 12px 0;
+  padding: 4px 12px;
+  border-left: 3px solid var(--line_regular, #e3e5e7);
+  color: var(--kala-text-secondary);
+}
+.kala-content hr {
+  border: none;
+  border-top: 1px solid var(--line_regular, #e3e5e7);
+  margin: 20px 0;
+}
+.kala-content pre {
+  /* 代码块背景走 B 站图形背景变量，深色主题下自动切换为深色 */
+  background: var(--graph_bg_thin, #f6f7f8);
+  border-radius: var(--kala-radius-md);
+  padding: 12px 16px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.kala-content code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.kala-content :not(pre) > code {
+  /* 行内代码背景走 B 站常规图形背景变量，深色主题下自动切换为深色 */
+  background: var(--graph_bg_regular, #f1f2f3);
+  border-radius: var(--kala-radius-sm);
+  padding: 2px 5px;
+  font-size: 0.9em;
+}
+.kala-content table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  width: 100%;
+}
+.kala-content th,
+.kala-content td {
+  border: 1px solid var(--line_regular, #e3e5e7);
+  padding: 6px 10px;
+  text-align: left;
+}
+.kala-content th {
+  /* 表头背景走 B 站常规图形背景变量，深色主题下自动切换为深色 */
+  background: var(--graph_bg_regular, #f1f2f3);
+}
+
+/* ===== 图片 ===== */
+.kala-content .kala-image,
+.kala-editor .kala-image {
+  margin: 12px auto;
+  text-align: center;
+}
+.kala-content .kala-image--center,
+.kala-editor .kala-image--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.kala-content .kala-image img,
+.kala-editor .kala-image img {
+  max-width: 100%;
+  border-radius: var(--kala-radius-md);
+}
+.kala-content .kala-image-caption,
+.kala-editor .kala-image-caption {
+  color: var(--kala-text-secondary);
+  font-size: var(--kala-font-size-small);
+  margin-top: 4px;
+}
+.kala-editor .kala-image--loading {
+  opacity: 0.5;
+}
+.kala-editor .kala-image--error img {
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+
+/* ===== 表情 / 提及 / 话题 ===== */
+.kala-content .kala-emoji,
+.kala-editor .kala-emoji {
+  display: inline-block;
+  vertical-align: text-bottom;
+  width: 24px;
+  height: 24px;
+  font-style: normal;
+  line-height: 24px;
+  text-align: center;
+}
+/* 字符形态（含无图短码兜底）不锁尺寸，避免短码溢出到相邻内容 */
+.kala-content .kala-emoji[data-emoji-char],
+.kala-editor .kala-emoji[data-emoji-char] {
+  width: auto;
+  height: auto;
+  min-width: 0;
+  line-height: inherit;
+}
+.kala-content .kala-emoji[data-emoji-char=""]:empty,
+.kala-editor .kala-emoji[data-emoji-char=""]:empty {
+  width: 24px;
+  height: 24px;
+}
+.kala-content .kala-mention,
+.kala-editor .kala-mention {
+  color: var(--kala-primary);
+  background: rgba(0, 174, 236, 0.08);
+  border-radius: var(--kala-radius-sm);
+  padding: 0 3px;
+}
+.kala-content .kala-topic,
+.kala-editor .kala-topic {
+  color: var(--kala-primary);
+}
+
+/* ===== 公式 ===== */
+.kala-content .kala-latex,
+.kala-editor .kala-latex {
+  margin: 12px 0;
+  padding: 8px 12px;
+  text-align: center;
+  overflow-x: auto;
+}
+.kala-editor .kala-latex.ProseMirror-selectednode {
+  outline: 2px solid var(--kala-primary);
+  border-radius: var(--kala-radius-md);
+}
+
+/* ===== 编辑态（ProseMirror 容器） ===== */
+.kala-editor .ProseMirror {
+  outline: none;
+  min-height: 300px;
+  max-width: var(--kala-editor-max-width);
+  margin: 0 auto;
+  padding: 16px 0 48px;
+}
+
+/* Placeholder 伪元素 */
+.kala-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--kala-color-gray-01);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* 节点选中态 */
+.kala-editor .ProseMirror-selectednode {
+  outline: 2px solid var(--kala-primary);
+}
+
+/* ===== 代码块编辑态（配合 CodeBlock NodeView） ===== */
+.kala-editor .kala-code-block {
+  position: relative;
+  background: #f6f7f8;
+  border-radius: var(--kala-radius-md);
+}
+.kala-editor .kala-code-block pre {
+  margin: 0;
+  padding: 12px 16px;
+  tab-size: 4;
+}
+.kala-editor .kala-code-block--wrap pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* hljs token 着色（变量驱动，不引整包主题 CSS） */
+.hljs-keyword,
+.hljs-selector-tag {
+  color: var(--kala-hljs-keyword);
+}
+.hljs-string,
+.hljs-attr {
+  color: var(--kala-hljs-string);
+}
+.hljs-number,
+.hljs-symbol {
+  color: var(--kala-hljs-number);
+}
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  color: var(--kala-hljs-title);
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--kala-hljs-comment);
+  font-style: italic;
+}
+.hljs-built_in,
+.hljs-type {
+  color: var(--kala-hljs-built_in);
+}
+.hljs-literal,
+.hljs-variable {
+  color: var(--kala-hljs-literal);
+}

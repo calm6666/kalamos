@@ -1,0 +1,16 @@
+/**
+ * kalamos 样式汇总入口（package.json exports "./styles" 指向此文件）
+ * 引入顺序：令牌 → 正文 → UI → 图标字体 → 卡片 → 卡片运行时补充
+ */
+@import './tokens.css';
+@import './content.css';
+@import './ui.css';
+@import './bdc.css';
+@import './cards.css';
+@import './card-extras.css';
+/* opus 展示页：主题变量（明/暗色板）→ 正文模块 → 渲染端卡片（按取证逐条誊写，仅改前缀） */
+@import './theme.css';
+@import './opus-content.css';
+@import './opus-cards.css';
+/* 静态渲染中公式由 Core 直接输出 katex HTML，样式需随主题一起加载 */
+@import 'katex/dist/katex.min.css';

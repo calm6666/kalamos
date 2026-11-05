@@ -1,0 +1,93 @@
+{
+  "name": "kalamos",
+  "description": "kalamos（κάλαμος，古希腊芦苇笔）：纯 TypeScript 富文本编辑器库，Tiptap 3 + ProseMirror，支持 Markdown 双向转换与 SSR 静态渲染",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/core/index.js",
+  "types": "./dist/core/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "import": "./dist/server/index.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.js"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/tokens": "./dist/styles/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:lib": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "peerDependencies": {
+    "@tiptap/core": "^3.0.0",
+    "@tiptap/pm": "^3.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/katex": "^0.16.8",
+    "@types/markdown-it": "^14.2.0",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "tsup": "^9.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.4"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
+    "@tiptap/core": "^3.32.0",
+    "@tiptap/extension-code-block": "^3.32.0",
+    "@tiptap/extension-code-block-lowlight": "^3.32.0",
+    "@tiptap/extension-color": "^3.32.0",
+    "@tiptap/extension-font-family": "^3.32.0",
+    "@tiptap/extension-heading": "^3.32.0",
+    "@tiptap/extension-highlight": "^3.32.0",
+    "@tiptap/extension-image": "^3.32.0",
+    "@tiptap/extension-link": "^3.32.0",
+    "@tiptap/extension-list": "^3.32.0",
+    "@tiptap/extension-mention": "^3.32.0",
+    "@tiptap/extension-subscript": "^3.32.0",
+    "@tiptap/extension-superscript": "^3.32.0",
+    "@tiptap/extension-table": "^3.32.0",
+    "@tiptap/extension-text-align": "^3.32.0",
+    "@tiptap/extension-text-style": "^3.32.0",
+    "@tiptap/extensions": "^3.32.0",
+    "@tiptap/html": "^3.32.0",
+    "@tiptap/pm": "^3.32.0",
+    "@tiptap/starter-kit": "^3.32.0",
+    "@tiptap/static-renderer": "^3.32.0",
+    "@tiptap/suggestion": "^3.32.0",
+    "hast-util-to-html": "^9.0.5",
+    "katex": "^0.19.1",
+    "lit": "^3.3.3",
+    "lowlight": "^3.3.0",
+    "mammoth": "^1.13.0",
+    "markdown-it": "^15.0.3",
+    "markdown-it-task-lists": "^2.1.1"
+  }
+}

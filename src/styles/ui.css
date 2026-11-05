@@ -1,0 +1,1388 @@
+/**
+ * Client 交互 UI 样式：工具栏 / 下拉 / 菜单 / 弹窗 / toast / 面板 / NodeView 部件
+ * 所有类名 kala-* 前缀
+ */
+
+/* ===== 编辑器外壳 ===== */
+.kala-editor {
+  background: var(--kala-bg-page);
+  border-radius: var(--kala-radius-lg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.kala-editor--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  border-radius: 0;
+  overflow: auto;
+}
+.kala-editor-body {
+  padding: 0 24px;
+}
+
+/* ===== 工具栏 ===== */
+.kala-toolbar {
+  display: flex;
+  align-items: center;
+  /* 从左侧排布，换行后各行同样左对齐 */
+  justify-content: flex-start;
+  /* 父容器宽度不足时自动换行，禁止溢出 */
+  flex-wrap: wrap;
+  gap: 14px;
+  min-height: 41px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--line_regular, #e3e5e7);
+  position: sticky;
+  top: 0;
+  background: var(--bg2, #f6f7f8);
+  z-index: 20;
+}
+.kala-toolbar-item {
+  flex-shrink: 0;
+}
+.kala-toolbar-item--preview {
+  margin-left: 48px;
+}
+
+/* ===== 通用下拉面板（字号/字体/标题/语言选择共用） ===== */
+.kala-dropdown {
+  /* 统一由 floating-ui 以 fixed 策略定位，避免落在文档流里 */
+  position: fixed;
+  min-width: 120px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-md);
+  padding: 4px;
+  z-index: 60;
+}
+.kala-dropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: transparent;
+  font-size: 13px;
+  color: var(--kala-text-color);
+  cursor: pointer;
+  text-align: left;
+}
+.kala-dropdown__item:hover {
+  background: var(--kala-bg-hover);
+}
+.kala-dropdown__item.is-active {
+  color: var(--kala-primary);
+}
+
+/* ===== 色板面板 ===== */
+.kala-color-picker {
+  /* floating-ui 以 fixed 策略定位，浮层必须脱离文档流 */
+  position: fixed;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  padding: 10px;
+  width: 232px;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 80;
+}
+.kala-color-picker__cell {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--kala-radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  padding: 0;
+}
+.kala-color-picker__cell:hover {
+  transform: scale(1.12);
+}
+.kala-color-picker__cell.is-active {
+  outline: 2px solid var(--kala-primary);
+  outline-offset: 1px;
+}
+.kala-color-picker__group-title {
+  grid-column: 1 / -1;
+  font-size: var(--kala-font-size-small);
+  color: var(--kala-text-secondary);
+  margin: 4px 0 0;
+}
+.kala-color-picker__empty {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+  background: var(--kala-bg-hover);
+  border-radius: var(--kala-radius-sm);
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+/* ===== 斜杠命令菜单 ===== */
+.kala-slash-menu {
+  position: fixed;
+  width: 320px;
+  max-height: 340px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  padding: 6px;
+  z-index: 80;
+}
+.kala-slash-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.kala-slash-menu__item.is-selected {
+  background: var(--kala-bg-hover);
+}
+.kala-slash-menu__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--kala-radius-sm);
+  background: var(--kala-bg-hover);
+  font-size: 16px;
+}
+.kala-slash-menu__title {
+  font-size: 14px;
+  color: var(--kala-text-color);
+}
+.kala-slash-menu__desc {
+  font-size: var(--kala-font-size-small);
+  color: var(--kala-text-secondary);
+}
+.kala-slash-menu__empty {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--kala-text-secondary);
+  text-align: center;
+}
+
+/* ===== 气泡菜单（选区格式气泡） ===== */
+.kala-bubble {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #2c2e33;
+  border-radius: var(--kala-radius-md);
+  padding: 4px;
+  box-shadow: var(--kala-shadow-md);
+  z-index: 70;
+}
+.kala-bubble__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: transparent;
+  color: #e3e5e7;
+  font-size: 13px;
+  cursor: pointer;
+}
+.kala-bubble__btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.kala-bubble__btn.is-active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* ===== 块拖拽手柄 ===== */
+.kala-drag-handle {
+  position: absolute;
+  left: -28px;
+  width: 24px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kala-color-gray-01);
+  cursor: grab;
+  border: none;
+  background: transparent;
+  border-radius: var(--kala-radius-sm);
+}
+.kala-drag-handle:hover {
+  background: var(--kala-bg-hover);
+  color: var(--kala-text-secondary);
+}
+.kala-drag-ghost {
+  opacity: 0.4;
+}
+
+/* ===== 弹窗 ===== */
+.kala-modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.kala-modal {
+  width: 480px;
+  max-width: calc(100vw - 48px);
+  background: var(--kala-bg-page);
+  border-radius: var(--kala-radius-lg);
+  box-shadow: var(--kala-shadow-lg);
+  padding: 20px;
+}
+.kala-modal__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.kala-modal__field {
+  margin-bottom: 12px;
+}
+.kala-modal__label {
+  display: block;
+  font-size: 13px;
+  color: var(--kala-text-secondary);
+  margin-bottom: 6px;
+}
+.kala-modal__input,
+.kala-modal__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+.kala-modal__input:focus,
+.kala-modal__textarea:focus {
+  border-color: var(--kala-primary);
+}
+.kala-modal__preview {
+  border: 1px dashed var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  padding: 12px;
+  margin-top: 8px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+.kala-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.kala-modal__btn {
+  height: 32px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--kala-radius-md);
+  font-size: 13px;
+  cursor: pointer;
+}
+.kala-modal__btn--primary {
+  background: var(--kala-primary);
+  color: #ffffff;
+}
+.kala-modal__btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.kala-modal__btn--ghost {
+  background: var(--kala-bg-hover);
+  color: var(--kala-text-color);
+}
+.kala-modal__error {
+  color: var(--kala-danger);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* ===== 轻提示 toast ===== */
+.kala-toast-wrap {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 300;
+  pointer-events: none;
+}
+.kala-toast {
+  background: rgba(28, 30, 33, 0.92);
+  color: #ffffff;
+  font-size: 13px;
+  border-radius: var(--kala-radius-md);
+  padding: 8px 16px;
+  box-shadow: var(--kala-shadow-md);
+  animation: kala-toast-in 0.18s ease-out;
+}
+@keyframes kala-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.kala-toast--leaving {
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+/* ===== TOC 目录面板 ===== */
+.kala-toc-panel {
+  position: absolute;
+  right: -260px;
+  top: 56px;
+  width: 240px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: 12px;
+  font-size: 13px;
+}
+.kala-toc-panel__title {
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+  margin-bottom: 8px;
+}
+.kala-toc-panel__empty {
+  color: var(--kala-color-gray-01);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 0;
+}
+.kala-toc-panel__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--kala-text-color);
+  padding: 5px 8px;
+  border-radius: var(--kala-radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-toc-panel__item:hover {
+  background: var(--kala-bg-hover);
+}
+.kala-toc-panel__item--lv2 { padding-left: 20px; }
+.kala-toc-panel__item--lv3 { padding-left: 32px; }
+
+/* ===== 手机预览（右侧 214px sticky 栏 + iPhone 0.5 缩放） ===== */
+.kala-editor-body--preview {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.kala-editor-body--preview > .kala-content {
+  flex: 1 1 0%;
+  min-width: 0;
+  max-width: var(--kala-editor-max-width);
+}
+.kala-preview-panel {
+  flex: 0 0 214px;
+  width: 214px;
+  box-sizing: border-box;
+  padding: 16px 9px 24px;
+  position: sticky;
+  top: 41px;
+  align-self: flex-start;
+}
+.kala-preview-panel[hidden] {
+  display: none;
+}
+
+/* 手机内文档容器（对应原版 .container / .title） */
+.kala-preview-container {
+  padding: 0 20px 20px;
+}
+.kala-preview-title {
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 500;
+  color: var(--text1, #18191c);
+  word-break: break-word;
+}
+.kala-preview-title--placeholder {
+  color: var(--text4, #c9ccd0);
+  pointer-events: none;
+}
+.kala-preview-placeholder {
+  color: var(--text4, #c9ccd0);
+}
+
+/* 手机内正文排版（对齐原版 ProseMirror 17px/1.7） */
+.kala-preview-content .kala-content {
+  color: var(--Ga9, #2f3238);
+  font-size: 17px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+.kala-preview-content .kala-content :where(p, ul, ol, h1, h2, h3, h4, h5, h6, blockquote, pre, hr, table) {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+.kala-preview-content .kala-content > * {
+  margin-top: 24px;
+}
+.kala-preview-content .kala-content > :first-child {
+  margin-top: 0;
+}
+.kala-preview-content .kala-content h1 { font-size: 19px; font-weight: 500; margin-top: 36px; }
+.kala-preview-content .kala-content h2 { font-size: 18px; font-weight: 500; margin-top: 36px; }
+.kala-preview-content .kala-content h3,
+.kala-preview-content .kala-content h4,
+.kala-preview-content .kala-content h5,
+.kala-preview-content .kala-content h6 { font-size: 17px; font-weight: 500; margin-top: 36px; }
+.kala-preview-content .kala-content :where(ul, ol) {
+  padding-left: 24px;
+}
+.kala-preview-content .kala-content :where(ol li + li, ul li + li) {
+  margin-top: 8px;
+}
+.kala-preview-content .kala-content p {
+  min-height: 1em;
+}
+.kala-preview-content .kala-content blockquote {
+  padding: 4px 12px;
+  border-left: 3px solid var(--line_regular, #e3e5e7);
+  color: var(--text2, #61666d);
+}
+.kala-preview-content .kala-content .kala-card {
+  max-width: 100%;
+}
+/* 手机视口内卡片按正文宽度铺排（覆盖桌面端 460px/592px 定宽，避免溢出与贴边） */
+.kala-preview-content .kala-content .kala-card-wrapper .kala-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 深色预览：卡片族内硬编码深色文字补偿（变量驱动的颜色已由主题变量自动切换） */
+kala-preview-theme[theme='dark'] .kala-content .comment-card-container.basic.styled,
+kala-preview-theme[theme='dark']
+  .kala-content
+  .comment-card-container.basic.styled
+  .comment-content
+  .comment-text {
+  color: var(--Ga9, #f1f2f3);
+}
+kala-preview-theme[theme='dark']
+  .kala-content
+  .comment-card-container.basic.styled
+  .video-source
+  .source-info
+  .source-title,
+kala-preview-theme[theme='dark']
+  .kala-content
+  .kala-card-wrapper.comment-card
+  .comment-header
+  .author-info
+  .author-name-line
+  .author-name {
+  color: var(--text3, #9499a0);
+}
+
+/* ===== 字数统计 ===== */
+.kala-char-count {
+  position: fixed;
+  bottom: 12px;
+  right: 16px;
+  font-size: var(--kala-font-size-small);
+  color: var(--kala-text-secondary);
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: 999px;
+  padding: 3px 12px;
+  z-index: 30;
+}
+.kala-char-count--over {
+  color: var(--kala-danger);
+  border-color: var(--kala-danger);
+}
+
+/* ===== @提及下拉 ===== */
+.kala-mention-menu {
+  position: fixed;
+  width: 280px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  padding: 6px;
+  z-index: 80;
+}
+.kala-mention-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.kala-mention-menu__item.is-selected {
+  background: var(--kala-bg-hover);
+}
+.kala-mention-menu__empty {
+  padding: 14px 8px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--kala-text-secondary);
+}
+.kala-mention-menu__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.kala-mention-menu__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--kala-bg-hover);
+}
+.kala-mention-menu__name {
+  font-size: 13px;
+  color: var(--kala-text-color);
+}
+.kala-mention-menu__sign {
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+}
+
+/* ===== emoji 选择器 ===== */
+.kala-emoji-picker {
+  /* floating-ui 以 fixed 策略定位，浮层必须脱离文档流 */
+  position: fixed;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  padding: 10px;
+  width: 300px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 80;
+}
+.kala-emoji-picker__btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--kala-radius-sm);
+  cursor: pointer;
+  font-size: 18px;
+}
+.kala-emoji-picker__btn img {
+  width: 22px;
+  height: 22px;
+}
+.kala-emoji-picker__btn:hover {
+  background: var(--kala-bg-hover);
+}
+
+/* ===== 公式块工具条（悬停显示，操作已并入共享悬浮菜单） ===== */
+.kala-latex-wrap:hover .kala-latex-toolbar {
+  opacity: 1;
+}
+.kala-latex-toolbar button {
+  height: 26px;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: rgba(44, 46, 51, 0.9);
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* 公式块包装与工具条 */
+.kala-latex-wrap {
+  position: relative;
+}
+.kala-latex-toolbar {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* 代码块 NodeView 部件 */
+.kala-code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 0;
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+}
+.kala-code-block__actions {
+  display: flex;
+  gap: 8px;
+}
+.kala-code-block__actions button {
+  border: none;
+  background: transparent;
+  color: var(--kala-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--kala-radius-sm);
+}
+.kala-code-block__actions button:hover {
+  background: var(--kala-bg-active);
+}
+.kala-code-block__lang {
+  position: relative;
+}
+.kala-code-block__line-numbers {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 12px 6px;
+  text-align: right;
+  color: var(--kala-color-gray-01);
+  font-size: 13px;
+  line-height: 1.6;
+  user-select: none;
+  pointer-events: none;
+}
+.kala-code-block--gutter pre {
+  padding-left: 44px;
+}
+
+/* ===== 卡片弹窗（对齐原版 eva3-toolbar-*-modal） ===== */
+.kala-modal.kala-card-modal {
+  padding: 0;
+  max-width: calc(100vw - 48px);
+}
+.kala-card-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+.kala-card-modal__title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--kala-text-color);
+}
+.kala-card-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--kala-radius-sm);
+  background: transparent;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__close:hover {
+  color: var(--kala-text-color);
+  background: var(--kala-bg-hover);
+}
+.kala-card-modal__body {
+  padding: 16px 24px 40px;
+}
+.kala-card-modal__body--tabs {
+  padding: 16px 0 0;
+}
+.kala-card-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+.kala-card-modal__btn {
+  height: 32px;
+  padding: 0 20px;
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  background: transparent;
+  font-size: 13px;
+  color: var(--kala-text-color);
+  cursor: pointer;
+}
+.kala-card-modal__btn:hover {
+  background: var(--kala-bg-hover);
+}
+.kala-card-modal__btn--primary {
+  border-color: transparent;
+  background: var(--kala-primary);
+  color: #ffffff;
+}
+.kala-card-modal__btn--primary:hover {
+  background: var(--kala-primary);
+  opacity: 0.85;
+}
+.kala-card-modal__btn--primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.kala-card-modal__error {
+  font-size: 12px;
+  line-height: 16px;
+  color: #f85a54;
+  margin-top: 4px;
+}
+.kala-card-modal__error:empty {
+  display: none;
+}
+/* 输入框校验失败红边（错误行非空时） */
+.kala-card-modal__input-wrap:has(> .kala-card-modal__error:not(:empty)) > .kala-modal__input,
+.kala-card-modal__pane > .kala-modal__input:not(:only-child):has(+ .kala-card-modal__error:not(:empty)) {
+  border-color: #f85a54;
+}
+.kala-card-modal .kala-modal__input {
+  height: 40px;
+  padding: 8px 12px;
+}
+.kala-card-modal .kala-modal__input:disabled {
+  background: var(--kala-bg-hover);
+  color: var(--kala-text-secondary);
+  cursor: not-allowed;
+}
+
+/* 表单标签行（14px，链接地址* / 链接展示文字*） */
+.kala-card-modal__form-item {
+  margin-bottom: 24px;
+}
+.kala-card-modal__form-item:last-child {
+  margin-bottom: 0;
+}
+.kala-card-modal__form-item--custom {
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+.kala-card-modal__form-item--restricted {
+  cursor: not-allowed;
+}
+.kala-card-modal__form-label {
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  margin-bottom: 8px;
+}
+.kala-card-modal__required {
+  color: #f85a54;
+  margin-left: 2px;
+}
+
+/* 评论卡标题行：链接地址* + 帮助 tooltip */
+.kala-card-modal__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.kala-card-modal__title-text {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--kala-text-color);
+}
+.kala-card-modal__help {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__help:hover {
+  color: var(--kala-text-color);
+}
+.kala-card-modal__help-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.kala-card-modal__tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 430px;
+  padding: 24px;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 40;
+  cursor: default;
+  text-align: left;
+}
+.kala-card-modal__help:hover .kala-card-modal__tooltip {
+  display: block;
+}
+.kala-card-modal__tooltip-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+}
+.kala-card-modal__tooltip img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: var(--kala-radius-sm);
+}
+
+/* 下拉选择器（选择视频 / 收藏夹） */
+.kala-card-modal__dropdown-container {
+  position: relative;
+}
+.kala-card-modal__dropdown-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  font-size: 14px;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__dropdown-selector:hover {
+  border-color: var(--kala-text-secondary);
+}
+.kala-card-modal__dropdown-arrow {
+  display: flex;
+  align-items: center;
+}
+.kala-card-modal__dropdown-arrow svg {
+  width: 12px;
+  height: 12px;
+  transform: rotate(-180deg);
+  transition: transform 0.2s ease;
+}
+.kala-card-modal__dropdown-arrow.open svg {
+  transform: rotate(0deg);
+}
+.kala-card-modal__dropdown-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 390px;
+  max-height: 450px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 30;
+}
+.kala-card-modal__list-loading,
+.kala-card-modal__list-more {
+  padding: 15px 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+}
+
+/* 视频条目：缩略图 128×72 + 角标 + 时长 + 标题 + 两行 meta */
+.kala-video-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid var(--kala-border-color);
+  cursor: pointer;
+}
+.kala-video-item:last-child {
+  border-bottom: none;
+}
+.kala-video-item:hover,
+.kala-video-item.selected {
+  background: var(--kala-bg-hover);
+}
+.kala-video-item__thumbnail {
+  position: relative;
+  width: 128px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: var(--kala-radius-sm);
+  overflow: hidden;
+}
+.kala-video-item__thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.kala-video-item__corner-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1px 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.5);
+}
+.kala-video-item__duration {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+}
+.kala-video-item__info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12px;
+}
+.kala-video-item__title {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-video-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--kala-text-secondary);
+  margin-top: 2px;
+}
+.kala-video-item__meta svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+.kala-video-item__date {
+  font-style: normal;
+}
+
+/* 收藏面板：左收藏夹导航 160px + 右视频列表 */
+.kala-card-modal__favorite-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 568px;
+  max-width: calc(100vw - 96px);
+  max-height: 450px;
+  display: flex;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 30;
+  overflow: hidden;
+}
+.kala-card-modal__favorite-nav {
+  width: 160px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-right: 1px solid var(--kala-border-color);
+}
+.kala-card-modal__favorite-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  cursor: pointer;
+}
+.kala-card-modal__favorite-item:hover {
+  background: var(--kala-bg-hover);
+}
+.kala-card-modal__favorite-item.selected {
+  color: #ffffff;
+  background: var(--kala-primary);
+}
+.kala-card-modal__favorite-item.selected .kala-card-modal__favorite-count {
+  color: rgba(255, 255, 255, 0.8);
+}
+.kala-card-modal__favorite-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-card-modal__favorite-count {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--kala-text-secondary);
+}
+.kala-card-modal__favorite-videos {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+/* tab 栏（分割线打通 modal 左右） */
+.kala-card-modal__tabs {
+  display: flex;
+  gap: 32px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--kala-border-color);
+}
+.kala-card-modal__tab {
+  padding: 8px 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+.kala-card-modal__tab:hover {
+  color: var(--kala-text-color);
+}
+.kala-card-modal__tab.active {
+  color: var(--kala-primary);
+  box-shadow: inset 0 -2px 0 var(--kala-primary);
+}
+.kala-card-modal__tab-content {
+  position: relative;
+  padding: 24px 24px 40px;
+}
+.kala-card-modal__pane {
+  position: relative;
+}
+
+/* Toy 预览条：poster 120×120 + 标题（graph_bg_thin 底） */
+.kala-card-modal__toy-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--kala-bg-hover);
+  border-radius: var(--kala-radius-md);
+}
+.kala-card-modal__toy-poster {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--kala-radius-sm);
+}
+.kala-card-modal__toy-title {
+  min-width: 0;
+  margin-left: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+}
+
+/* 搜索容器（游戏 / 名片搜索 tab 共用） */
+.kala-card-modal__search-container {
+  position: relative;
+}
+.kala-card-modal__search-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 450px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 30;
+}
+.kala-card-modal__game-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+}
+.kala-card-modal__game-item:hover,
+.kala-card-modal__game-item.selected {
+  background: var(--kala-bg-hover);
+}
+.kala-card-modal__game-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--kala-radius-sm);
+}
+.kala-card-modal__game-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12px;
+}
+.kala-card-modal__game-title {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-card-modal__selected-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.kala-card-modal__selected-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.kala-card-modal__selected-thumb {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--kala-radius-sm);
+}
+.kala-card-modal__selected-name {
+  min-width: 0;
+  margin-left: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-card-modal__selected-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__selected-remove svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 名片搜索：search-form 38px + 下拉 240px + 已选条目 */
+.kala-card-modal__user-searchform {
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+.kala-card-modal__user-search-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 32px;
+  padding: 0 8px;
+  background: var(--kala-bg-hover);
+  border-radius: var(--kala-radius-md);
+}
+.kala-card-modal__user-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--kala-text-color);
+}
+.kala-card-modal__user-search-input::placeholder {
+  color: var(--kala-text-secondary);
+}
+.kala-card-modal__user-search-clean {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__user-search-clean svg {
+  width: 14px;
+  height: 14px;
+}
+.kala-card-modal__user-search-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  color: var(--kala-text-secondary);
+}
+.kala-card-modal__user-search-btn svg {
+  width: 17px;
+  height: 17px;
+}
+.kala-card-modal__user-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--kala-bg-page);
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+  box-shadow: var(--kala-shadow-lg);
+  z-index: 30;
+}
+.kala-card-modal__user-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.kala-card-modal__user-option:hover {
+  background: var(--kala-bg-hover);
+}
+.kala-card-modal__user-option-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.kala-card-modal__user-option-text {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12px;
+}
+.kala-card-modal__user-option-name {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-card-modal__user-option-fans {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--kala-text-secondary);
+}
+.kala-card-modal__selected-user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: 1px solid var(--kala-border-color);
+  border-radius: var(--kala-radius-md);
+}
+.kala-card-modal__selected-user-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.kala-card-modal__selected-user-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.kala-card-modal__selected-user-text {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12px;
+}
+.kala-card-modal__selected-user-name {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--kala-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kala-card-modal__selected-user-stats {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--kala-text-secondary);
+}
+.kala-card-modal__selected-user-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--kala-text-secondary);
+  cursor: pointer;
+}
+.kala-card-modal__selected-user-close svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* iframe 弹窗（投票 560×540 / 商品 1018×686 无头无尾） */
+.kala-card-modal__iframe {
+  display: block;
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 0 0 var(--kala-radius-lg) var(--kala-radius-lg);
+}
+.kala-card-modal--headless .kala-card-modal__iframe {
+  height: 686px;
+  border-radius: var(--kala-radius-lg);
+}

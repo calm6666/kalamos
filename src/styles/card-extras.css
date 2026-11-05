@@ -1,0 +1,299 @@
+/**
+ * 卡片运行时补充样式（Core 模板自定义部分）
+ * - NodeView 外壳与共享悬浮操作菜单（卡片/链接/图片）
+ * - 通用卡片版式（原版包内无此类，按 B 站卡片视觉补齐）
+ * - 卡片插入下拉菜单的图标排版
+ * - 评论骨架屏（抽取包缺失的头部/文本骨架）
+ */
+
+/* ===== NodeView 外壳 ===== */
+.kala-card-node-view {
+  position: relative;
+  margin: 12px 0;
+}
+/* 外壳禁用通用节点选中框（content.css 的 .ProseMirror-selectednode 规则），
+   选中/hover 样式由 cards.css 提供贴合卡片圆角的 outline */
+.kala-card-node-view.ProseMirror-selectednode {
+  outline: none;
+}
+
+/* ===== 悬浮操作菜单（对齐原版 eva-link-hover-menu） ===== */
+.kala-hover-menu {
+  position: fixed;
+  z-index: 999;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text1, #18191c);
+  background: var(--bg1, #fff);
+  border: 1px solid var(--line_regular, #e3e5e7);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  padding: 4px 8px;
+  user-select: none;
+  white-space: nowrap;
+  animation: kala-hover-menu-fade-in 120ms ease;
+}
+@keyframes kala-hover-menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.kala-hover-menu__inner {
+  display: flex;
+  align-items: center;
+}
+.kala-hover-menu .menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  appearance: none;
+  margin: 0;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text1, #18191c);
+  font-size: 13px;
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+}
+.kala-hover-menu .menu-btn:hover,
+.kala-hover-menu .menu-btn:active {
+  color: var(--brand_blue, #00aeec);
+}
+.kala-hover-menu .menu-btn i[class^='sic-'] {
+  font-size: 14px;
+}
+.kala-hover-menu .menu-btn[data-action='deleteCard']:hover,
+.kala-hover-menu .menu-btn[data-action='removeLink']:hover {
+  color: #fb7299;
+}
+.kala-hover-menu .divider {
+  width: 1px;
+  height: 16px;
+  margin: 0 4px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* 视图切换下拉（对齐原版视图切换面板） */
+.kala-hover-menu .view-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 4px;
+}
+.kala-hover-menu .view-selector i[class^='sic-'] {
+  font-size: 12px;
+}
+.kala-hover-menu .arrow-icon {
+  transition: transform 0.3s ease;
+}
+.kala-hover-menu .arrow-icon.open {
+  transform: rotate(180deg);
+}
+.kala-view-select {
+  position: relative;
+  font-size: 13px;
+}
+.kala-view-select__trigger {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text1, #18191c);
+  font-size: 13px;
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+}
+.kala-view-select__trigger:hover {
+  color: var(--brand_blue, #00aeec);
+}
+.kala-view-select__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kala-view-select__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 1000;
+  padding: 4px;
+  background: var(--bg1, #fff);
+  border: 1px solid var(--line_regular, #e3e5e7);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+.kala-view-select__option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 30px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--text1, #18191c);
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.kala-view-select__option:hover {
+  background: var(--graph_bg_thin, #f6f7f8);
+}
+.kala-view-select__option.active {
+  background: var(--brand_blue_thin, #e3f4fd);
+  color: var(--brand_blue, #00aeec);
+}
+.kala-view-select__option.disabled {
+  color: var(--text3, #9499a0);
+  cursor: not-allowed;
+}
+.kala-view-select__option.disabled:hover {
+  background: transparent;
+}
+.kala-view-select__option-desc {
+  margin-top: 2px;
+  color: var(--text3, #9499a0);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: normal;
+}
+
+/* 置顶视频替换确认弹窗描述 */
+.kala-modal__desc {
+  margin: 0 0 16px;
+  color: var(--kala-text-secondary, #61666d);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ===== 卡片插入下拉菜单 ===== */
+.kala-card-menu .kala-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.kala-card-menu .kala-dropdown__item i[class^='sic-'] {
+  font-size: 18px;
+  color: var(--text2, #61666d);
+}
+
+/* ===== 通用卡片 ===== */
+.generic-card-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  text-align: left;
+}
+.generic-card-media {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--graph_bg_thick, #e3e5e7);
+}
+.generic-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.generic-card-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.generic-card-title {
+  overflow: hidden;
+  color: var(--text1, #18191c);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.generic-card-description {
+  overflow: hidden;
+  color: var(--text2, #61666d);
+  font-size: 12px;
+  line-height: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 评论头像 / 公式静态兜底 ===== */
+.kala-card-wrapper.comment-card .author-avatar.avatar-placeholder {
+  background-color: #e3e5e7;
+  background-repeat: no-repeat;
+}
+.katex .katex-mathml,
+.kala-latex .katex-mathml {
+  display: none;
+}
+
+/* ===== 评论骨架屏 ===== */
+.kala-card-loading.comment-card-skeleton {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.kala-card-loading.comment-card-skeleton .skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kala-card-loading.comment-card-skeleton .skeleton-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--graph_bg_thick, #e3e5e7);
+}
+.kala-card-loading.comment-card-skeleton .skeleton-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kala-card-loading.comment-card-skeleton .skeleton-name {
+  width: 96px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--graph_bg_thick, #e3e5e7);
+}
+.kala-card-loading.comment-card-skeleton .skeleton-time {
+  width: 64px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--graph_bg_thick, #e3e5e7);
+}
+.kala-card-loading.comment-card-skeleton .skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.kala-card-loading.comment-card-skeleton .skeleton-text {
+  width: 100%;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--graph_bg_thick, #e3e5e7);
+}
+.kala-card-loading.comment-card-skeleton .skeleton-text.short {
+  width: 60%;
+}

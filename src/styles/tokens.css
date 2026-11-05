@@ -1,0 +1,110 @@
+/**
+ * kalamos 主题令牌：颜色 / 字号 / 间距 / 圆角 / 阴影全部收敛为 CSS 变量
+ * 调色板 --kala-color-*（6 色 × 4 档 + 3 档灰）与 core/palette.ts 的色值表一一对应
+ * 主题定制仅需覆盖变量
+ */
+:root {
+  /* ===== 调色板：字色（与 paletteColorValues 同步维护） ===== */
+  --kala-color-blue-01: #e3f4fd;
+  --kala-color-blue-02: #b8e2fb;
+  --kala-color-blue-03: #6fc2f2;
+  --kala-color-blue-04: #00aeec;
+  --kala-color-cyan-01: #ddf6f4;
+  --kala-color-cyan-02: #aeeae6;
+  --kala-color-cyan-03: #63d8d2;
+  --kala-color-cyan-04: #0fb3ae;
+  --kala-color-green-01: #e3f6e7;
+  --kala-color-green-02: #bcebc5;
+  --kala-color-green-03: #7eda8e;
+  --kala-color-green-04: #2dbf4a;
+  --kala-color-yellow-01: #fdf3d7;
+  --kala-color-yellow-02: #fae5a3;
+  --kala-color-yellow-03: #f5cf5f;
+  --kala-color-yellow-04: #e6a23c;
+  --kala-color-red-01: #fbe5e5;
+  --kala-color-red-02: #f6c3c3;
+  --kala-color-red-03: #ef8f8f;
+  --kala-color-red-04: #e35d5d;
+  --kala-color-purple-01: #f1e8fb;
+  --kala-color-purple-02: #dcc6f5;
+  --kala-color-purple-03: #bd95ea;
+  --kala-color-purple-04: #8f5fd6;
+  --kala-color-gray-01: #c9cdd4;
+  --kala-color-gray-02: #8a919f;
+  --kala-color-gray-03: #4e5666;
+
+  /* ===== 调色板：背景色（同值复用） ===== */
+  --kala-bg-blue-01: #e3f4fd;
+  --kala-bg-blue-02: #b8e2fb;
+  --kala-bg-blue-03: #6fc2f2;
+  --kala-bg-blue-04: #00aeec;
+  --kala-bg-cyan-01: #ddf6f4;
+  --kala-bg-cyan-02: #aeeae6;
+  --kala-bg-cyan-03: #63d8d2;
+  --kala-bg-cyan-04: #0fb3ae;
+  --kala-bg-green-01: #e3f6e7;
+  --kala-bg-green-02: #bcebc5;
+  --kala-bg-green-03: #7eda8e;
+  --kala-bg-green-04: #2dbf4a;
+  --kala-bg-yellow-01: #fdf3d7;
+  --kala-bg-yellow-02: #fae5a3;
+  --kala-bg-yellow-03: #f5cf5f;
+  --kala-bg-yellow-04: #e6a23c;
+  --kala-bg-red-01: #fbe5e5;
+  --kala-bg-red-02: #f6c3c3;
+  --kala-bg-red-03: #ef8f8f;
+  --kala-bg-red-04: #e35d5d;
+  --kala-bg-purple-01: #f1e8fb;
+  --kala-bg-purple-02: #dcc6f5;
+  --kala-bg-purple-03: #bd95ea;
+  --kala-bg-purple-04: #8f5fd6;
+  --kala-bg-gray-01: #c9cdd4;
+  --kala-bg-gray-02: #8a919f;
+  --kala-bg-gray-03: #4e5666;
+
+  /* ===== 代码高亮令牌（hljs 类名以 token 变量着色，不引整包主题） ===== */
+  --kala-hljs-keyword: #c678dd;
+  --kala-hljs-string: #98c379;
+  --kala-hljs-number: #d19a66;
+  --kala-hljs-title: #61afef;
+  --kala-hljs-comment: #7f848e;
+  --kala-hljs-built_in: #e6a23c;
+  --kala-hljs-literal: #56b6c2;
+
+  /* ===== 布局与外观 ===== */
+  --kala-editor-max-width: 780px;
+  --kala-text-color: #18191c;
+  --kala-text-secondary: #6b7078;
+  --kala-border-color: #e3e5e7;
+  --kala-bg-page: #ffffff;
+  --kala-bg-hover: #f1f2f3;
+  --kala-bg-active: #e3e5e7;
+  --kala-primary: #00aeec;
+  --kala-danger: #e35d5d;
+  --kala-warning: #e6a23c;
+
+  --kala-font-size-base: 15px;
+  --kala-font-size-small: 12px;
+  --kala-font-size-h1: 28px;
+  --kala-font-size-h2: 22px;
+  --kala-font-size-h3: 18px;
+  --kala-line-height: 1.74;
+
+  --kala-radius-sm: 4px;
+  --kala-radius-md: 8px;
+  --kala-radius-lg: 12px;
+
+  --kala-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --kala-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+
+  --kala-toolbar-height: 44px;
+
+  /* ===== 任意值例外说明 =====
+   * 以下变量为「无法枚举的动态值」注入通道（设计文档 §12 唯一例外）：
+   * - --kala-dynamic-font-size：字号下拉的任意 px 值
+   * - --kala-preview-ratio：预览分栏的可拖拽比例
+   * 由 Client 层在运行时按需写入对应元素的行内 style（仅变量，非样式规则）
+   */
+  --kala-dynamic-font-size: inherit;
+  --kala-preview-ratio: 1fr;
+}
